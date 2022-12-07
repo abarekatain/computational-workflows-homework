@@ -1,4 +1,5 @@
 # Computational Research Workflows Homework
+
 ## Doctoral Programme in Science and Engineering (DSSE)
 
 ## Practicalities
@@ -19,10 +20,10 @@ The email should contain a link to a GitHub repository with:
   commands that you used to complete the exercises. You do not have to include
   everything, just the key commands. I have left placeholders where these commands
   should go:
-
-    ```
-    # Add your commands here
-    ```
+  
+  ```
+  # Add your commands here
+  ```
 * A `wallet.py` file that passes the unit tests.
 * A `Dockerfile`.
 * A working GitHub Actions file `.github/workflows/test.yml` that runs the unit
@@ -34,15 +35,11 @@ At the end of this homework, you will have a computational workflow consisting
 of:
 
 1. A git repository hosted at https://github.com.
-
-1. A `Dockerfile` describing an environment containing `python` and the Python module
+2. A `Dockerfile` describing an environment containing `python` and the Python module
    `pytest`.
-
-2. A Docker image built from the `Dockerfile` and uploaded to the Dockerhub.
-
-3. A simple Python program describing a simple Wallet class and a set of unit tests.
-
-4. A continuous integration setup using GitHub Actions.
+3. A Docker image built from the `Dockerfile` and uploaded to the Dockerhub.
+4. A simple Python program describing a simple Wallet class and a set of unit tests.
+5. A continuous integration setup using GitHub Actions.
 
 For reference, you can use my notes that I used during the course
 [here](https://github.com/jhale/computational-workflows/blob/master/README_instructor.md)
@@ -53,18 +50,14 @@ page](https://jhale.github.io/computational-workflows/).
 
 1. Go to [GitHub](https://github.com). Click on the plus icon in the top right
    hand corner of the screen. Then click on New Repository.
-
 2. Create a *public* repository called e.g.
    `jhale/computational-workflows-homework`.
-
 3. Clone your repository. In a terminal run, e.g.:
-
-     git clone git@github.com:jhale/computational-workflows-homework.git
-
+   
+   git clone git@github.com:jhale/computational-workflows-homework.git
+   
    substituting with the correct location of your repository.
-
-4. Copy this `README.md` text file to your new repository. `git add`, `git
-   commit` and `git push` it to your repository.
+4. Copy this `README.md` text file to your new repository. `git add`, `git commit` and `git push` it to your repository.
 
 ## Dockerfile
 
@@ -82,7 +75,9 @@ RUN apt-get -y update && \
 2. `git add` and `git push` the file `Dockerfile` to the repository.
 
 ```
-# Add your commands here
+git add .
+git commit -m "Add Dockerfile"
+git push origin
 ```
 
 ## Build and push Docker image
@@ -92,7 +87,10 @@ RUN apt-get -y update && \
    `<yourdockerhubusername>/computational-workflows`.
 
 ```
-# Add your commands here
+docker build .
+docker tag f06e8b7d5dd8 abarekatain/computational-workflows
+docker login
+docker push abarekatain/computational-workflows
 ```
 
 ## Run a container, and share in files from the host.
@@ -102,7 +100,7 @@ RUN apt-get -y update && \
    an interactive prompt inside the running container.
 
 ```
-# Add your commands here
+docker run -ti -v $(pwd):/shared abarekatain/computational-workflows bash
 ```
 
 ## Setup a simple Python test suite
@@ -113,29 +111,29 @@ RUN apt-get -y update && \
    repository.  ``git add``, ``git commit`` and ``git push`` them.
 
 ```
-# Add your commands here
+git add  wallet.py test_wallet.py
+git commit -m "Add Python Files"
+git push origin
 ```
 
 2. Start a Docker container using your image and share your repository into a
    directory `/root/shared` into the container.
 
 ```
-# Add your commands here
+docker run -ti -v $(pwd):/shared abarekatain/computational-workflows bash
 ```
 
 3. Run the tests inside the container by going to `/root/shared` and running the
    command `py.test-3`. The tests should fail.
-
-3. In a terminal on the host modify ``wallet.py`` until the tests in
+4. In a terminal on the host modify ``wallet.py`` until the tests in
    ``test_wallet.py`` all pass.
-
-4. ``git add``, ``git commit`` and ``git push`` the working ``wallet.py`` file.
+5. ``git add``, ``git commit`` and ``git push`` the working ``wallet.py`` file.
 
 ## GitHub Actions for Continuous Integration
 
 1. Using the example in the class notes make a `.github/workflows/test.yml`
    file that checks out your repository and runs the unit tests inside the
    Docker image that you pushed to the DockerHub.
-
-3. Push the `.github/workflows/test.yml` file to GitHub. Check that you get the
+2. Push the `.github/workflows/test.yml` file to GitHub. Check that you get the
    green tick showing that your tests pass.
+
